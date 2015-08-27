@@ -682,3 +682,25 @@ function getPrettyTime($referencedate=0, $timepointer='', $measureby='', $autote
         return false;
     }
 }
+
+function IsWorkingHoursWithTZ($date) {
+    // This function is like the one above, except takes the timezone into account for accurate
+    // retrieval of the alerts sent to the user from Splunk. Can't afford to be an hour out here. 
+    $oncall_timezone = getTeamOncallConfig('timezone');
+    //we extract working hours from config
+    $wanted_working_hours = getTeamOncallConfig('workinghours');
+    date_default_timezone_set($oncall_timezone);
+    $return_work_hours=explode("-",$wanted_working_hours[date("l",$date)]);
+    //we build to timestamp one with the starting working hours
+    // the second with the en of working hours for the selected day of week of our alert
+    $fork1=strtotime(date("Y/m/d",$date)." ".$return_work_hours[0]);
+    $fork2=strtotime(date("Y/m/d",$date)." ".$return_work_hours[1]);
+    //test if my date is between fork1 and fork2 and if yes, alert was fired during working hours
+    if ($date<$fork2 and $date>$fork1) {
+        return(true);
+    }
+    else {
+        return(false);
+    }
+}
+

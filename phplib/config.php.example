@@ -71,6 +71,15 @@ $teams = array(
             "timezone" => "America/New_York",
             "start" => "friday 18:00",
             "end" => "friday 18:00",
+	    "workinghours" => array(
+                                "Monday" => "08:00-18:00",
+                                "Tuesday" => "08:00-18:00",
+                                "Wednesday" =>"08:00-18:00",
+                                "Thursday" =>"08:00-18:00",
+                                "Friday" => "08:00-18:00",
+                                "Saturday" => "",
+                                "Sunday" => "",
+                ),
         ),
         "weekly_hints" => array("jira", "github"),
         "irc_channel" => "#ops"

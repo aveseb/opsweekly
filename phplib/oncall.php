@@ -109,7 +109,13 @@ function printOnCallNotifications($on_call_name, $start, $end, $oncall_start, $o
             } else {
                 $html .= "<tr>";
             }
-            $html .= "<td>{$pretty_date}</td><td>{$n['hostname']}</td><td>{$n['service']}</td><td><pre><small>{$n['output']}</small></pre></td>";
+	    if (IsWorkingHoursWithTZ($n['time'])) {
+               $html .= "<td>{$pretty_date}</td><td>{$n['hostname']}</td><td>{$n['service']}</td><td><pre><small>{$n['output']}</small></pre></td>";
+            }
+       	    else {
+			$ROOT_URL=getTeamConfig('root_url');
+			$html .= "<td><img src=\"{$ROOT_URL}/assets/sleep/kmoon.png\"/>&nbsp;{$pretty_date}</td><td>{$n['hostname']}</td><td>{$n['service']}</td><td><pre><small>{$n['output']}</small></pre></td>";
+	    }
             $html .= "<td><span class='label label-{$nagios_state_to_badge[$n['state']]}'>{$n['state']}</span></td>";
 
             # Need to populate all the information into hidden fields so we get all the data back nicely when the form is submitted
