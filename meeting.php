@@ -27,6 +27,7 @@ $permalink = "{$protocol}{$_SERVER['SERVER_NAME']}/meeting.php?week={$start_ts}"
 $page_title = getTeamName() . " Weekly Updates - Meeting View";
 include_once('phplib/header.php');
 include_once('phplib/nav.php');
+$root_url=getTeamUrl();
 ?>
 
 <script>
@@ -114,7 +115,7 @@ function setDateToLastWeek() {
 
         <div id="oncall-stats">Loading report...</div>
         <script>
-            $.post("/generate_report.php", { type: 'week', date: '<?php echo $time_requested ?>' }).done(function(data) {
+            $.post("<?php echo $root_url; ?>/generate_report.php/generate_report.php", { type: 'week', date: '<?php echo $time_requested ?>' }).done(function(data) {
                 $('#oncall-stats').html(data);
             });
         </script>
