@@ -72,7 +72,7 @@ function renderTopNTableBody($input_array, $limit = 10, $type = 'host') {
     if(!is_array($input_array)) {
         return false;
     }
-
+    $ROOT_URL=getTeamConfig('root_url');
     // Get the top N results
     // First, sort the array by value
     arsort($input_array);
@@ -80,6 +80,7 @@ function renderTopNTableBody($input_array, $limit = 10, $type = 'host') {
     $a = array_slice($input_array, 0, $limit);
 
     $html = '';
+    echo "ta chatte " . $ROOT_URL;
     foreach($a as $k => $v) {
         if ($type == 'host') {
             $link="<a href=\"{$ROOT_URL}/search.php?query=host: {$k}\">{$k}</a>";
@@ -96,7 +97,7 @@ function renderTopNPrettyLine($input_array, $limit = 4) {
     if(!is_array($input_array)) {
         return false;
     }
-
+    $ROOT_URL=getTeamConfig('root_url');
     arsort($input_array);
     $a = array_splice($input_array, 0, $limit);
 
