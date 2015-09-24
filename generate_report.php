@@ -24,10 +24,10 @@ $oncall_end = $oncall_period[1];
 if ($report_type == "week") { // Weekly report.. Pretty simple, get the week, process data.
     $pretty_start = date("l jS F Y", $oncall_start);
     $pretty_end = date("l jS F Y", $oncall_end);
-
     // First, check the week exists/there is data. 
     if($results = getOnCallReportForWeek($oncall_start, $oncall_end)) {
         $total_notifications = count($results);
+    	$total_notifications_not_working_hours=0;
 
         $week_status_total = array();
         $week_tag_total = array();
@@ -66,6 +66,10 @@ if ($report_type == "week") { // Weekly report.. Pretty simple, get the week, pr
                 // This indicates a 'no back to sleep' situation after an awakening
                 $week_ntts_count++;
             }
+	   // Non Working hours Stats
+	    if ( ! IsWorkingHoursWithTZ($n['timestamp'])) {
+		$total_notifications_not_working_hours++;
+	    }
         }
         // Collect up the per day totals into the graph array
         ksort($per_day_total);
